@@ -3,7 +3,7 @@ version: "3.9"
 services:
   mariadb:
     image: mariadb:latest
-    container_name: mariadb
+    container_name: mariadb2
     restart: unless-stopped
 
     environment:
