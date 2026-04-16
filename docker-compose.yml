@@ -1,30 +1,30 @@
 version: "3.9"
 
 services:
-  mariadb:
-    build: .
-    image: mariadb-with-nano
-    container_name: mariadb2
-    restart: unless-stopped
+mariadb:
+  build: .
+  image: mariadb-with-nano
+  container_name: mariadb2
+  restart: unless-stopped
 
-    environment:
-      MARIADB_ROOT_PASSWORD: asdf1234
-      MARIADB_DATABASE: appdb
-      MARIADB_USER: appuser
-      MARIADB_PASSWORD: appuser_pw
-      TZ: Europe/Vienna
+  environment:
+    MARIADB_ROOT_PASSWORD: asdf1234
+    MARIADB_DATABASE: appdb
+    MARIADB_USER: appuser
+    MARIADB_PASSWORD: appuser_pw
+    TZ: Europe/Vienna
 
-    volumes:
-      - mariadb-data:/var/lib/mysql
+  volumes:
+    - mariadb-data:/var/lib/mysql
 
-    ports:
-      - "3306:3306"
+  ports:
+    - "3306:3306"
 
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  healthcheck:
+    test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+    interval: 10s
+    timeout: 5s
+    retries: 5
 
 volumes:
-  mariadb-data:
+mariadb-data:
