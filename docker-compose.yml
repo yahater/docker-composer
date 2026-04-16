@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
 
     environment:
-      MARIADB_ROOT_PASSWORD: example_root_pw
+      MARIADB_ROOT_PASSWORD: asdf1234
       MARIADB_DATABASE: appdb
       MARIADB_USER: appuser
       MARIADB_PASSWORD: appuser_pw
