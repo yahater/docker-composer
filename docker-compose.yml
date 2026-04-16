@@ -2,7 +2,8 @@ version: "3.9"
 
 services:
   mariadb:
-    image: mariadb:latest
+    build: .
+    image: mariadb-with-nano
     container_name: mariadb2
     restart: unless-stopped
 
@@ -15,11 +16,9 @@ services:
 
     volumes:
       - mariadb-data:/var/lib/mysql
-      # optional custom config:
-      # - ./my.cnf:/etc/mysql/my.cnf:ro
 
     ports:
-      - "3306:3306"   # remove if DB should not be accessible from host
+      - "3306:3306"
 
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
