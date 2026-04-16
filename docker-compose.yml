@@ -1,28 +1,31 @@
+version: "3.9"
+
 services:
-  #db
-  db:
-    image: 'mysql/mysql-server:8.0'
-    container_name: mysql
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
     restart: unless-stopped
-    ports:
-      - '3306:3306'
-    volumes:
-      - mysqldata:/var/lib/mysql
+
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: root
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
-    networks:
-      - mysql-network
+      MARIADB_ROOT_PASSWORD: example_root_pw
+      MARIADB_DATABASE: appdb
+      MARIADB_USER: appuser
+      MARIADB_PASSWORD: appuser_pw
+      TZ: Europe/Vienna
+
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      # optional custom config:
+      # - ./my.cnf:/etc/mysql/my.cnf:ro
+
+    ports:
+      - "3306:3306"   # remove if DB should not be accessible from host
+
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 5s
-      retries: 3
+      retries: 5
 
 volumes:
-  mysqldata:
-    driver: local
+  mariadb-data:
